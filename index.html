@@ -6,10 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image color picker</title>
 </head>
-<body style="display: flex;gap: 60px;margin: unset;">
-    <div>
-        <canvas id="canvas" width="400" height="654"></canvas>
-        <div id="hovered-color" style="margin-top:200px; width: 400px;height: 400px;background: grey;"></div>
+<body >
+    <div style="display: flex; flex-direction: column; gap: 60px;margin: unset;align-items: center;">
+        <h2>Clique para copiar a imagem ou passe o mouse para ver a cor do pixel</h2>
+        <div style="display: flex; gap: 60px;margin: unset;">
+            <canvas id="canvas" width="400" height="654"></canvas>
+            <div id="hovered-color" style=" width: 400px;height: 329px;background: black;">Passe o mouse na imagem ao lado</div>
+        </div>
+      
         <!-- <div id="selected-color" style="width: 400px;height: 400px;"></div> -->
     </div>
 
