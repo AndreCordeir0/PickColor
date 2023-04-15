@@ -3,6 +3,8 @@ const img = new Image();
 img.crossOrigin = "anonymous";
 img.src = "./ddnsizh.jpg";
 
+let control = 0;
+
 let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 const IMG_HEIGTH = 327;
@@ -27,26 +29,41 @@ function pick(event, destination) {
     return rgba;
 }
 function drawCopyImage(){
-    let i = 0;
-    let j = 0;
-    let y =355
+    let xImagemOriginal = 0;
+    let yImagemOriginal = 0;
+    let yImagemCopiada = 355;
+    const controlCopy = control;
+    if(controlCopy == 0){
+        control = 255;
+    }else{
+        control = 0;
+    } 
     const interval = setInterval(()=>{
-        if(j == (355 + IMG_HEIGTH + 1)){
+        if(yImagemOriginal == (355 + IMG_HEIGTH + 1)){
             clearInterval(interval);
         }
-        if(i < IMG_WIDTH){
-            let pixel = ctx.getImageData(i, j, 1, 1);
+        if(xImagemOriginal < IMG_WIDTH){
+            let pixel = ctx.getImageData(xImagemOriginal, yImagemOriginal, 1, 1);
             const data = pixel.data;
-            const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+            let rgba;
+            if(controlCopy == 255){
+                rgba = rgb(controlCopy,data);
+            }else{
+                rgba =  `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+            }
             ctx.fillStyle = rgba;
-            ctx.fillRect(i, y, 1, 1);
-            i++;
+            ctx.fillRect(xImagemOriginal, yImagemCopiada, 1, 1);
+            xImagemOriginal++;
         }else{
-            i =0;
-            y++;
-            j++;
+            xImagemOriginal = 0;
+            yImagemCopiada++;
+            yImagemOriginal++;
         }
     },0)
+}
+
+function rgb(param, data){
+    return `rgba(${param - data[0]}, ${param - data[1]}, ${param - data[2]}, ${data[3] / 255})`;
 }
 canvas.addEventListener("mousemove", (event) => pick(event, hoveredColor));
 canvas.addEventListener("click", () => drawCopyImage());
